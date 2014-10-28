@@ -62,7 +62,7 @@ class uploadimage_module
 					)));
 				}
 			break;
-			
+
 			case 'details':
 				// Load the extension detail page
 				$this->tpl_name = 'acp_ext_details';

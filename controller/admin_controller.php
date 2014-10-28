@@ -206,7 +206,7 @@ class admin_controller
 				)
 			);
 		}
-		
+
 		// Set output vars for display in the template
 		$this->template->assign_vars(array(
 			'U_ACTION'		=> $this->u_action,
@@ -334,7 +334,7 @@ class admin_controller
 			'attach_comment'=> 'comment',
 			'filesize'		=> $file->filesize,
 		);
-		
+
 		$this->attachment_data = array_merge(array(0 => $new_entry), $this->attachment_data);
 		if (isset($this->plupload) && $this->plupload->is_active())
 		{

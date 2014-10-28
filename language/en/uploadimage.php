@@ -23,11 +23,11 @@ $lang = array_merge($lang, array(
 
 	'IMAGE_AVAILABLE'		=> 'Available images',
 	'IMAGE_LIST'			=> 'Image list',
-	'IMAGE_PATH'			=> 'Imagepath',	
+	'IMAGE_PATH'			=> 'Imagepath',
 	'IMAGE_NAME'			=> 'Image-name',
 	'FORMAT'				=> 'Format',
 	'SIZE'					=> 'Size',
-		
+
 	'IMAGE_DELETE'			=> 'Delete',
 	'ACP_IMAGE_DELETE_CONFIRM' => 'sure to delete image?',
 	'NO_IMAGE_CATEGORY'		=> 'No category',

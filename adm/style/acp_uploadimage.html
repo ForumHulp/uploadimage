@@ -1,0 +1,154 @@
+<!-- IF S_ALLOW_CDN -->
+<!-- INCLUDECSS //maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css -->
+<!-- ELSE -->
+<!-- INCLUDECSS ./../../ext/forumhulp/uploadimage/vendor/font-awesome/css/font-awesome.min.css -->
+<!-- ENDIF -->
+<!-- INCLUDECSS css/upload.css -->
+<!-- INCLUDECSS css/jquery.simpledialog.css -->
+<!-- INCLUDECSS css/plupload.css -->
+
+<!-- INCLUDE overall_header.html -->
+
+<a name="maincontent"></a>
+
+<h1>{L_ACP_UPLOAD_IMAGE_TITLE} <a href="{U_ACTION}&amp;action=details" class="simpledialog"><i class="fa fa-info-circle"></i></a></h1>
+
+<p>{L_ACP_UPLOAD_IMAGE_TITLE_EXPLAIN}</p>
+
+<hr />
+<div class="panel bg3 panel-container" id="attach-panel">
+	<div class="inner">
+	<form id="postform" method="post" action="{S_POST_ACTION}"{S_FORM_ENCTYPE}>
+	<div class="panel bg3 panel-container" id="attach-panel">
+		<div class="inner">
+	
+		<p>{L_ADD_ATTACHMENT_EXPLAIN} <span class="hidden" id="drag-n-drop-message">{L_PLUPLOAD_DRAG_TEXTAREA}</span></p>
+		
+		<fieldset class="fields2" id="attach-panel-basic">
+		<dl>
+			<dt><label for="fileupload">{L_FILENAME}{L_COLON}</label></dt>
+			<dd>
+				<input type="file" name="fileupload" id="fileupload" maxlength="{FILESIZE}" value="" class="inputbox autowidth" /> 
+				<input type="submit" name="add_file" value="{L_ADD_FILE}" class="button2" onclick="upload = true;" />
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="filecomment">{L_FILE_COMMENT}{L_COLON}</label></dt>
+			<dd><textarea name="filecomment" id="filecomment" rows="1" cols="40" class="inputbox autowidth">{FILE_COMMENT}</textarea></dd>
+		</dl>
+		</fieldset>
+
+		<div id="attach-panel-multi">
+			<input type="button" class="button2" value="{L_PLUPLOAD_ADD_FILES}" id="add_files" />
+		</div>
+
+		<div class="panel<!-- IF not .attach_row --> hidden<!-- ENDIF -->" id="file-list-container">
+			<div class="inner">
+				<table class="table1 fixed-width-table">
+					<thead>
+						<tr>
+							<th class="attach-name">{L_PLUPLOAD_FILENAME}</th>
+							<th class="attach-filesize">{L_PLUPLOAD_SIZE}</th>
+							<th class="attach-status">{L_PLUPLOAD_STATUS}</th>
+						</tr>
+					</thead>
+					<tbody class="responsive-skip-empty" id="file-list">
+						<tr class="attach-row" id="attach-row-tpl">
+								<td class="attach-name">
+									<span class="file-name ellipsis-text" style="cursor:pointer;"></span>
+									<img class="image-name" style="position: absolute;z-index:1000;display:none;" src="" width="210px" />
+									<span class="attach-controls">
+										<input type="button" value="{L_DELETE_FILE}" class="button2 file-delete" style="float:right" />
+									</span>
+									<span class="clear"></span>
+								</td>
+								<td class="attach-filesize">
+									<span class="file-size"></span>
+								</td>
+								<td class="attach-status">
+									<span class="file-progress">
+										<span class="file-progress-bar"></span>
+									</span>
+									<span class="file-status"></span>
+								</td>
+						</tr>
+						<!-- BEGIN attach_row -->
+							<tr class="attach-row" data-attach-id="{attach_row.ATTACH_ID}">
+								<td class="attach-name">
+									<span class="file-name ellipsis-text"><a href="{attach_row.U_VIEW_ATTACHMENT}">{attach_row.FILENAME}</a></span>
+									<span class="attach-controls">
+										<input type="button" value="{L_PLACE_INLINE}" class="button2 file-inline-bbcode" />&nbsp; 
+										<input type="submit" name="delete_file[{attach_row.ASSOC_INDEX}]" value="{L_DELETE_FILE}" class="button2 file-delete" style="float:right" />
+									</span>
+									<span class="clear"></span>
+								</td>
+								<td class="attach-filesize">
+									<span class="file-size">{attach_row.FILESIZE}</span>
+								</td>
+								<td class="attach-status">
+									<span class="file-status file-uploaded"></span>
+								</td>
+							</tr>
+						<!-- END attach_row -->
+					</tbody>
+				</table>
+			</div>
+		</div>
+		</div>
+	</div>
+	</form>
+</div>
+
+<!-- IF .image_list -->
+	<script type="text/javascript">
+		function flip(x)
+		{
+			xx = document.getElementById(x).style;
+			if (xx.display=='' || xx.display=='none'){    xx.display = 'block';}else{    xx.display = 'none';}
+		}
+	</script>
+    <table id="ext_table">
+        <tr>
+            <td class="row3" colspan="7"><strong>{L_IMAGE_LIST}</strong></td>
+        </tr>
+        <tr class="ext_disabled">
+            <td style="border-bottom:#BABABA thin solid;">#</td>
+            <td style="border-bottom:#BABABA thin solid;"></td>
+            <td style="border-bottom:#BABABA thin solid;">{L_IMAGE_PATH}</td>
+            <td style="border-bottom:#BABABA thin solid;">{L_IMAGE_NAME}</td>
+            <td style="text-align: width:110px; center;border-bottom:#BABABA thin solid;">{L_FORMAT}</td>
+            <td style="text-align: width:70px; center;border-bottom:#BABABA thin solid;">{L_SIZE}</td>
+            <td style="text-align: center;border-bottom:#BABABA thin solid;">{L_IMAGE_DELETE}</td>
+        </tr>
+       <!-- BEGIN image_list -->
+        <tr onmouseover="this.className='ruleractueel';" onmouseout="this.className='column';" class="column">
+			<td>{image_list.ID}</td>
+            <td style="cursor:pointer;" onmouseover="javascript:flip('image{image_list.ID}')" onmouseout="javascript:flip('image{image_list.ID}')">
+			<img style="height:12px;" src="{image_list.PATH}" />
+			<img id="image{image_list.ID}" style="position: absolute;z-index:1000;display:none;" title="{image_list.FILENAME}" src="{image_list.PATH}" width="210px" />
+			</td>
+			<td style="width:210px;"><span id="path{image_list.ID}" class="unc_path" style="display:block; width:210px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{image_list.PATH}</span></td>
+            <td style="display:block; width:200px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{image_list.FILENAME}</td>
+            <td style="text-align: center;">{image_list.WIDTH} px * {image_list.WIDTH} px</td>
+            <td style="text-align: center;">{image_list.SIZE}</td>
+            <td style="text-align: center;"><a href="{image_list.DELLURL}" data-ajax="row_delete">{L_IMAGE_DELETE}</a></td>
+        </tr>
+        <!-- END image_list -->
+        </tbody>
+    </table>
+	<!-- IF .pagination or TOTAL_POSTS -->
+		<div class="pagination">
+			<!-- IF .pagination -->
+				<!-- INCLUDE pagination.html -->
+			<!-- ELSE -->
+				&bull; {PAGE_NUMBER}
+			<!-- ENDIF -->
+		</div>
+	<!-- ENDIF -->
+<!-- ENDIF -->
+<br style="clear:both" />
+
+<!-- INCLUDEJS js/jquery.simpledialog.js -->
+<!-- INCLUDEJS js/upload.js -->
+
+<!-- INCLUDE overall_footer.html -->

@@ -127,7 +127,6 @@ class admin_controller
 		// Start assigning vars for main page ...
 		$this->template->assign_vars(array(
 			'ERROR'						=> (sizeof($error)) ? implode('<br />', $error) : '',
-			'UA_PROGRESS_BAR'			=> addslashes(append_sid("{$this->root_path}posting.$this->php_ext", "f=0&amp;mode=popup")),
 			'S_FORM_ENCTYPE'			=> $form_enctype,
 			'S_POST_ACTION'				=> $s_action,
 			'FILESIZE'					=> $max_filesize,

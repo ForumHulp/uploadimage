@@ -149,7 +149,7 @@ class admin_controller
 		$image_path = ((defined('PHPBB_USE_BOARD_URL_PATH') && PHPBB_USE_BOARD_URL_PATH) ? $board_url : $corrected_path) . 'images/ui/';
 		if (!is_dir($image_path))
 		{
-			$this->recursive_mkdir($image_path);
+			$this->recursive_mkdir($image_path, 0775);
 		}
 
 		$image_list = array();

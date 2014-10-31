@@ -174,7 +174,7 @@ class admin_controller
 
 				$cat = ($image_path == $file_path) ? $this->user->lang['NO_IMAGE_CATEGORY'] : str_replace("$image_path/", '', $file_path);
 				$image_list[] = array(
-					'file'      => ($cat != $this->user->lang['NO_IMAGE_CATEGORY']) ? rawurlencode(str_replace($this->root_path, '/' , $cat)) . '/' . rawurlencode($image) : rawurlencode($image),
+					'file'      => ($cat != $this->user->lang['NO_IMAGE_CATEGORY']) ? $cat . '/' . $image : $image,
 					'filename'  => rawurlencode($image),
 					'name'      => ucfirst(str_replace('_', ' ', preg_replace('#^(.*)\..*$#', '\1', $image))),
 					'width'     => $dims[0],
@@ -196,7 +196,8 @@ class admin_controller
 		{
 			$this->template->assign_block_vars('image_list', array(
 				'ID'		=> $i + 1,
-				'PATH'		=> rawurldecode($image_list[$i]['file']),
+				'PATH'		=> $image_list[$i]['file'],
+				'IMAGEPATH'	=> str_replace($this->root_path, '/', rawurldecode($image_list[$i]['file'])),
 				'FILENAME'	=> $image_list[$i]['filename'],
 				'NAME'		=> $image_list[$i]['name'],
 				'WIDTH'		=> $image_list[$i]['width'],
@@ -356,7 +357,7 @@ class admin_controller
 		if (!$mode)
 		{
 			global $config;
-			$mode = octdec($config['am_dir_perms']);
+			$mode = 0755;
 		}
 
 		$dirs = explode('/', $path);

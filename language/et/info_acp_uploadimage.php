@@ -15,8 +15,8 @@ if (empty($lang) || !is_array($lang))
 	$lang = array();
 }
 $lang = array_merge($lang, array(
-	'ACP_IMAGE_MANAGEMENT'			=> 'Laadi pilt üles',
-	'ACP_IMAGE_TITLE'				=> 'Laadi üles pilt',
+	'ACP_IMAGE_MANAGEMENT'			=> 'Laadi pilte üles',
+	'ACP_IMAGE_TITLE'				=> 'Laadi pilte üles',
 	'ACP_IMAGE_DELETE_ERRORED'		=> 'Midagi läks valesti',
 	'ACP_IMAGE_DELETE_SUCCESS'		=> 'Pilt kustutatud',
 	'ACP_IMAGE_DELETED_LOG'			=> '<strong>Pilt kustutatud</strong><br />» %1s',

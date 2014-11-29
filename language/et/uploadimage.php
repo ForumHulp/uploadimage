@@ -16,7 +16,7 @@ if (empty($lang) || !is_array($lang))
 }
 $lang = array_merge($lang, array(
 	'ACP_UPLOAD_IMAGE_TITLE'				=> 'Laadi pilte üles',
-	'ACP_UPLOAD_IMAGE_TITLE_EXPLAIN'		=> 'Laadi pilte üles lubab sul üles laadida pilte oma foorumi <i>images</i> kausta. UI kausta kasutatakse piltide jaoks, ning luuakse automaatselt kui lubatakse laiendus AJP "Kohanda" -> "Halda laiendusi" vahelehel.<br />
+	'ACP_UPLOAD_IMAGE_TITLE_EXPLAIN'		=> 'Laadi pilte üles laiendus lubab sul üles laadida pilte oma foorumi <i>images</i> kausta läbi AJP. UI kausta kasutatakse piltide jaoks, ning luuakse automaatselt kui lubatakse laiendus AJP "Kohanda" -> "Halda laiendusi" vahelehel.<br />
 	Kopeeri pildi teekond lihtsalt vajutades ja kasuta seda kleepides kus iganes sa soovid näidata oma pilti.
 	Kustutades pilte ole hoolikas, kuna pilte ei kontrollita enne kas pilt on kuskil veel kasutusel.',
 	'IMAGE_AVAILABLE'		=> 'Saadaval pildid',

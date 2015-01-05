@@ -172,9 +172,8 @@ class admin_controller
 					$dims = array(0, 0);
 				}
 
-				$cat = ($image_path == $file_path) ? $this->user->lang['NO_IMAGE_CATEGORY'] : str_replace("$image_path/", '', $file_path);
 				$image_list[] = array(
-					'file'      => ($cat != $this->user->lang['NO_IMAGE_CATEGORY']) ? $cat . '/' . $image : $image,
+					'path'      => $file_path,
 					'filename'  => rawurlencode($image),
 					'name'      => ucfirst(str_replace('_', ' ', preg_replace('#^(.*)\..*$#', '\1', $image))),
 					'width'     => $dims[0],
@@ -196,8 +195,8 @@ class admin_controller
 		{
 			$this->template->assign_block_vars('image_list', array(
 				'ID'		=> $i + 1,
-				'PATH'		=> $image_list[$i]['file'],
-				'IMAGEPATH'	=> str_replace($this->root_path, '/', rawurldecode($image_list[$i]['file'])),
+				'PATH'		=> str_replace('../', '', $image_list[$i]['path']) . '/' . $image_list[$i]['filename'],
+				'IMAGEPATH'	=> $image_list[$i]['path'] . '/' . $image_list[$i]['filename'],
 				'FILENAME'	=> $image_list[$i]['filename'],
 				'NAME'		=> $image_list[$i]['name'],
 				'WIDTH'		=> $image_list[$i]['width'],

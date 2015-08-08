@@ -230,7 +230,7 @@ class admin_controller
 	{
 		foreach ($array as $key => $val)
 		{
-			if (strpos($val['filename'], $id) === false) 
+			if (strpos($val['filename'], $id) === false)
 			{
 				unset($array[$key]);
 			}

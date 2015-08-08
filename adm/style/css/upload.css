@@ -24,6 +24,16 @@ background-position:right;outline:0;
 
 form fieldset {border-radius:0;}
 
+input[type=text] { font-family: 'FontAwesome'; } /* This is for the placeholder */*/
+
+.keyword:before {
+    font-family: 'FontAwesome';
+    color:red;
+    position: relative;
+    left: -5px;
+    content: "\f007";
+}
+
 /* Extension details */
 .requirements_title {
     display: inline-block;

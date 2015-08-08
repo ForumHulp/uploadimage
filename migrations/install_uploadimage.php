@@ -13,7 +13,7 @@ class install_uploadimage extends \phpbb\db\migration\migration
 {
 	public function effectively_installed()
 	{
-		return isset($this->config['uploadimage_version']) && version_compare($this->config['uploadimage_version'], '3.1.0.RC5', '>=');
+		return isset($this->config['uploadimage_version']) && version_compare($this->config['uploadimage_version'], '3.1.0.RC6', '>=');
 	}
 
 	static public function depends_on()
@@ -24,7 +24,7 @@ class install_uploadimage extends \phpbb\db\migration\migration
 	public function update_data()
 	{
 		return array(
-			array('config.add', array('uploadimage_version', '3.1.0.RC5')),
+			array('config.add', array('uploadimage_version', '3.1.0.RC6')),
 			array('module.add', array('acp', 'ACP_CAT_CUSTOMISE', 'ACP_IMAGE_MANAGEMENT')),
 			array('module.add', array(
 				'acp', 'ACP_IMAGE_MANAGEMENT', array(

@@ -153,7 +153,7 @@ class admin_controller
 		}
 
 		$image_list = array();
-		$image_count = 0;
+		$image_count = $dir_size = 0;
 		$iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($image_path, \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::UNIX_PATHS), \RecursiveIteratorIterator::SELF_FIRST);
 		foreach ($iterator as $file_info)
 		{
@@ -180,15 +180,25 @@ class admin_controller
 					'height'    => $dims[1],
 					'size'		=> filesize($file_path . '/' . $image),
 				);
+				$dir_size = $dir_size + filesize($file_path . '/' . $image);
 				$image_count++;
 			}
+		}
+		
+		$search = $this->request->is_set_post('search') && $this->request->variable('keyword', '') ?  $this->request->variable('keyword', '') : false;
+		$keywords = $this->request->variable('keywords', '');
+		if ($search || $keywords)
+		{
+			$search = (!$search) ? $keywords : $search;
+			$image_list = $this->searchForId($search, $image_list);
+			$image_count = sizeof($image_list);
 		}
 		rsort($image_list);
 
 		$start = $this->request->variable('start', 0);
 		$per_page = 10;
 		$start = $this->pagination->validate_start($start, $per_page, $image_count);
-		$base_url = $this->u_action;
+		$base_url = $this->u_action . (($search) ? '&amp;keywords=' . $search: '');
 		$this->pagination->generate_template_pagination($base_url, 'pagination', 'start', $image_count, $per_page, $start);
 
 		for($i = $start; $i < $image_count && $i < $start + $per_page; $i++)
@@ -202,7 +212,7 @@ class admin_controller
 				'WIDTH'		=> $image_list[$i]['width'],
 				'HEIGHT'	=> $image_list[$i]['height'],
 				'SIZE'		=> get_formatted_filesize($image_list[$i]['size']),
-				'DELLURL'	=> $this->u_action . '&amp;action=delete&amp;image_id=' . rawurldecode($image_list[$i]['file'])
+				'DELLURL'	=> $this->u_action . '&amp;action=delete&amp;image_id=' . rawurldecode($image_list[$i]['filename'])
 				)
 			);
 		}
@@ -210,8 +220,22 @@ class admin_controller
 		// Set output vars for display in the template
 		$this->template->assign_vars(array(
 			'U_ACTION'		=> $this->u_action,
-			'U_ADD_PAGE'	=> "{$this->u_action}&amp;action=add",
+			'DIR_SIZE'		=> get_formatted_filesize($dir_size),
+			'KEYWORD'		=> $search,
+			'U_ADD_PAGE'	=> $this->u_action . '&amp;action=add',
 		));
+	}
+
+	function searchForId($id, $array)
+	{
+	   foreach ($array as $key => $val) 
+	   {
+		   if (strpos($val['filename'], $id) === false) 
+		   {
+			   unset($array[$key]);
+		   }
+	   }
+	   return $array;
 	}
 
 	/**

@@ -108,16 +108,21 @@
 	</script>
     <table id="ext_table">
         <tr>
-            <td class="row3" colspan="7"><strong>{L_IMAGE_LIST}</strong></td>
+            <td class="row3" colspan="7"><strong>{L_IMAGE_LIST}</strong>
+				<form method="post" action="" style="float:right;">
+					<input class="keyword" type="text" name="keyword" id="keyword" value="{KEYWORD}" title="{L_SEARCH}" placeholder="&#xf002;" />
+					<input type="hidden" name="search" value="" />
+				</form>
+			</td>
         </tr>
         <tr class="ext_disabled">
             <td style="border-bottom:#BABABA thin solid;">#</td>
             <td style="border-bottom:#BABABA thin solid;"></td>
             <td style="border-bottom:#BABABA thin solid;">{L_IMAGE_PATH}</td>
             <td style="border-bottom:#BABABA thin solid;">{L_IMAGE_NAME}</td>
-            <td style="text-align: width:110px; center;border-bottom:#BABABA thin solid;">{L_FORMAT}</td>
-            <td style="text-align: width:70px; center;border-bottom:#BABABA thin solid;">{L_SIZE}</td>
-            <td style="text-align: center;border-bottom:#BABABA thin solid;">{L_IMAGE_DELETE}</td>
+            <td style="text-align:center;width:110px;border-bottom:#BABABA thin solid;">{L_FORMAT}</td>
+            <td style="text-align:center;width:70px;border-bottom:#BABABA thin solid;">{L_SIZE}</td>
+            <td style="text-align:center;border-bottom:#BABABA thin solid;">{L_IMAGE_DELETE}</td>
         </tr>
        <!-- BEGIN image_list -->
         <tr onmouseover="this.className='ruleractueel';" onmouseout="this.className='column';" class="column">
@@ -133,6 +138,7 @@
             <td style="text-align: center;"><a href="{image_list.DELLURL}" data-ajax="row_delete">{L_IMAGE_DELETE}</a></td>
         </tr>
         <!-- END image_list -->
+		<tr><td colspan="6" style="text-align:right">{DIR_SIZE}</td><td></td></tr>
         </tbody>
     </table>
 	<!-- IF .pagination or TOTAL_POSTS -->

@@ -104,6 +104,7 @@ class admin_controller
 		$s_action = $this->u_action . '&action=add';
 		$form_enctype = (@ini_get('file_uploads') == '0' || strtolower(@ini_get('file_uploads')) == 'off') ? '' : ' enctype="multipart/form-data"';
 		$max_filesize = @ini_get("upload_max_filesize");
+		
 		if (!empty($max_filesize))
 		{
 			$unit = strtolower(substr($max_filesize, -1, 1));
@@ -166,8 +167,7 @@ class admin_controller
 				if (function_exists('getimagesize'))
 				{
 					$dims = getimagesize($file_path . '/' . $image);
-				}
-				else
+				} else
 				{
 					$dims = array(0, 0);
 				}
@@ -193,12 +193,29 @@ class admin_controller
 			$image_list = $this->searchForId($search, $image_list);
 			$image_count = sizeof($image_list);
 		}
-		rsort($image_list);
+
+		// sort keys, direction en sql
+		$sort_key	= $this->request->variable('sk', 'n');
+		$sort_dir	= $this->request->variable('sd', 'a');
+		$sort_by_sql = array('s' => 'size', 'n' => 'name', 'f' => 'width');
+		$sql_sort = $sort_by_sql[$sort_key];
+
+		$this->template->assign_vars(array(
+			'S_SORT_KEY'		=> $sort_key,
+			'S_SORT_DIR'		=> $sort_dir
+		));
+
+		usort($image_list, function($a, $b) use ($sql_sort)
+		{
+			return $a[$sql_sort] - $b[$sql_sort];
+		});
+
+		$image_list = ($sort_dir != 'd') ? array_reverse($image_list) : $image_list;
 
 		$start = $this->request->variable('start', 0);
 		$per_page = 10;
 		$start = $this->pagination->validate_start($start, $per_page, $image_count);
-		$base_url = $this->u_action . (($search) ? '&amp;keywords=' . $search: '');
+		$base_url = $this->u_action . '&amp;sk=' . $sort_key . '&amp;sd=' . $sort_dir . (($search) ? '&amp;keywords=' . $search: '');
 		$this->pagination->generate_template_pagination($base_url, 'pagination', 'start', $image_count, $per_page, $start);
 
 		for($i = $start; $i < $image_count && $i < $start + $per_page; $i++)
@@ -350,7 +367,7 @@ class admin_controller
 		$file->clean_filename('real');
 		$file->move_file(str_replace($this->root_path, '', $upload_dir), true, true);
 
-		$download_url = $upload_dir . $file->realname;
+		$download_url = chmod($upload_dir . $file->realname, 0775);
 		$new_entry = array(
 			'attach_id'		=> rand(1, 9),
 			'is_orphan'		=> 1,

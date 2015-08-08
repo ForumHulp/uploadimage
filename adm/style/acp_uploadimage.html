@@ -1,7 +1,7 @@
 <!-- IF S_ALLOW_CDN -->
 <!-- INCLUDECSS //maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css -->
 <!-- ELSE -->
-<!-- INCLUDECSS ./../../ext/forumhulp/uploadimage/vendor/font-awesome/css/font-awesome.min.css -->
+<!-- INCLUDECSS {ROOT_PATH}ext/forumhulp/uploadimage/vendor/font-awesome/css/font-awesome.min.css -->
 <!-- ENDIF -->
 <!-- INCLUDECSS css/upload.css -->
 <!-- INCLUDECSS css/jquery.simpledialog.css -->
@@ -119,9 +119,16 @@
             <td style="border-bottom:#BABABA thin solid;">#</td>
             <td style="border-bottom:#BABABA thin solid;"></td>
             <td style="border-bottom:#BABABA thin solid;">{L_IMAGE_PATH}</td>
-            <td style="border-bottom:#BABABA thin solid;">{L_IMAGE_NAME}</td>
-            <td style="text-align:center;width:110px;border-bottom:#BABABA thin solid;">{L_FORMAT}</td>
-            <td style="text-align:center;width:70px;border-bottom:#BABABA thin solid;">{L_SIZE}</td>
+            <td style="border-bottom:#BABABA thin solid;">{L_IMAGE_NAME}<a href="{U_ACTION}&amp;sk=n&amp;sd=a" title="{L_DESCENDING}" style="float:right;"><i class="fa fa-arrow-down"<!-- IF S_SORT_KEY == 'n' and S_SORT_DIR == 'a' --> id="act-arrow"<!-- ENDIF -->></i></a> 
+            <a href="{U_ACTION}&amp;sk=n&amp;sd=d" title="{L_ASCENDING}" style="float:right;"><i class="fa fa-arrow-up"<!-- IF S_SORT_KEY == 'n' and S_SORT_DIR == 'd' --> id="act-arrow"<!-- ENDIF -->></i></a>
+</td>
+            <td style="text-align:center;width:110px;border-bottom:#BABABA thin solid;">{L_FORMAT}<a href="{U_ACTION}&amp;sk=f&amp;sd=a" title="{L_DESCENDING}" style="float:right;"><i class="fa fa-arrow-down"<!-- IF S_SORT_KEY == 'f' and S_SORT_DIR == 'a' --> id="act-arrow"<!-- ENDIF -->></i></a> 
+            <a href="{U_ACTION}&amp;sk=f&amp;sd=d" title="{L_ASCENDING}" style="float:right;"><i class="fa fa-arrow-up"<!-- IF S_SORT_KEY == 'f' and S_SORT_DIR == 'd' --> id="act-arrow"<!-- ENDIF -->></i></a>
+</td>
+            <td style="text-align:center;width:70px;border-bottom:#BABABA thin solid;">{L_SIZE}<a href="{U_ACTION}&amp;sk=s&amp;sd=a" title="{L_DESCENDING}" style="float:right;"><i class="fa fa-arrow-down"<!-- IF S_SORT_KEY == 's' and S_SORT_DIR == 'a' --> id="act-arrow"<!-- ENDIF -->></i></a> 
+            <a href="{U_ACTION}&amp;sk=s&amp;sd=d" title="{L_ASCENDING}" style="float:right;"><i class="fa fa-arrow-up"<!-- IF S_SORT_KEY == 's' and S_SORT_DIR == 'd' --> id="act-arrow"<!-- ENDIF -->></i></a>
+
+</td>
             <td style="text-align:center;border-bottom:#BABABA thin solid;">{L_IMAGE_DELETE}</td>
         </tr>
        <!-- BEGIN image_list -->
@@ -132,7 +139,7 @@
 			<img id="image{image_list.ID}" style="position: absolute;z-index:1000;display:none;" title="{image_list.FILENAME}" src="{image_list.IMAGEPATH}" width="210px" />
 			</td>
 			<td style="width:210px;"><span id="path{image_list.ID}" class="unc_path" style="display:block; width:210px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{image_list.PATH}</span></td>
-            <td style="display:block; width:200px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{image_list.FILENAME}</td>
+            <td style="display:block; width:200px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{image_list.NAME}</td>
             <td style="text-align: center;">{image_list.WIDTH} px * {image_list.WIDTH} px</td>
             <td style="text-align: center;">{image_list.SIZE}</td>
             <td style="text-align: center;"><a href="{image_list.DELLURL}" data-ajax="row_delete">{L_IMAGE_DELETE}</a></td>

@@ -184,7 +184,7 @@ class admin_controller
 				$image_count++;
 			}
 		}
-		
+
 		$search = $this->request->is_set_post('search') && $this->request->variable('keyword', '') ?  $this->request->variable('keyword', '') : false;
 		$keywords = $this->request->variable('keywords', '');
 		if ($search || $keywords)
@@ -228,14 +228,14 @@ class admin_controller
 
 	function searchForId($id, $array)
 	{
-	   foreach ($array as $key => $val) 
-	   {
-		   if (strpos($val['filename'], $id) === false) 
-		   {
-			   unset($array[$key]);
-		   }
-	   }
-	   return $array;
+		foreach ($array as $key => $val)
+		{
+			if (strpos($val['filename'], $id) === false) 
+			{
+				unset($array[$key]);
+			}
+		}
+		return $array;
 	}
 
 	/**

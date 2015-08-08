@@ -104,7 +104,7 @@ class admin_controller
 		$s_action = $this->u_action . '&action=add';
 		$form_enctype = (@ini_get('file_uploads') == '0' || strtolower(@ini_get('file_uploads')) == 'off') ? '' : ' enctype="multipart/form-data"';
 		$max_filesize = @ini_get("upload_max_filesize");
-		
+
 		if (!empty($max_filesize))
 		{
 			$unit = strtolower(substr($max_filesize, -1, 1));

@@ -1,6 +1,7 @@
 #attach-panel-multi {
 	display: none;
-	margin-bottom: 1em;
+	margin: 0 10px 0 1em;
+	float:left;
 }
 
 #file-list td {

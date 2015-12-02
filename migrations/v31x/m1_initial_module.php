@@ -7,29 +7,38 @@
 *
 */
 
-namespace forumhulp\uploadimage\migrations;
+namespace forumhulp\uploadimage\migrations\v31x;
 
-class install_uploadimage extends \phpbb\db\migration\migration
+/**
+* Migration stage 1: Initial module
+*/
+class m1_initial_module extends \phpbb\db\migration\migration
 {
-	public function effectively_installed()
-	{
-		return isset($this->config['uploadimage_version']) && version_compare($this->config['uploadimage_version'], '3.1.0.RC6', '>=');
-	}
-
+	/**
+	 * Assign migration file dependencies for this migration
+	 *
+	 * @return array Array of migration files
+	 * @static
+	 * @access public
+	 */
 	static public function depends_on()
 	{
-		return array('\phpbb\db\migration\data\v310\dev');
+		return array('\phpbb\db\migration\data\v310\gold');
 	}
 
+	/**
+	 * Add or update data in the database
+	 *
+	 * @return array Array of table data
+	 * @access public
+	 */
 	public function update_data()
 	{
 		return array(
-			array('config.add', array('uploadimage_version', '3.1.0.RC6')),
 			array('module.add', array('acp', 'ACP_CAT_CUSTOMISE', 'ACP_IMAGE_MANAGEMENT')),
 			array('module.add', array(
 				'acp', 'ACP_IMAGE_MANAGEMENT', array(
 					'module_basename'	=> '\forumhulp\uploadimage\acp\uploadimage_module',
-					'auth'				=> 'ext_forumhulp/uploadimage && acl_a_styles',
 					'modes'				=> array('main'),
 				),
 			)),

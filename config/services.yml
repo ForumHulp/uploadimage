@@ -2,12 +2,12 @@ services:
     forumhulp.uploadimage.admin.controller:
         class: forumhulp\uploadimage\controller\admin_controller
         arguments:
-            - @controller.helper
-            - @path_helper
+            - @config
             - @request
-            - @template
             - @user
             - @service_container
+            - @template
+            - @path_helper
             - @cache
             - @pagination
             - @log

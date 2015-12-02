@@ -15,7 +15,7 @@ class uploadimage_module
 
 	function main($id, $mode)
 	{
-		global $cache, $phpbb_container, $request, $user;
+		global $phpbb_container, $request, $user;
 
 		// Add the ACP lang file
 		$user->add_lang_ext('forumhulp/uploadimage', 'uploadimage');
@@ -35,15 +35,27 @@ class uploadimage_module
 		// Set the page title for our ACP page
 		$this->page_title = $user->lang('ACP_UPLOAD_IMAGE_TITLE');
 
+		if ($request->is_set_post('delete_file'))
+		{
+			$index =  $request->variable('delete_file', array(0 => 0));
+
+			$files =  $request->variable('attachment_data', array(0 => array('' => '')), true, \phpbb\request\request_interface::POST);
+			$file = $files[key($index)];
+			$admin_controller->delete_image($file['real_filename']);
+
+			exit();
+			$action = '';
+		}
+
+		if ($request->is_set_post('add_file'))
+		{
+			$admin_controller->add_image();
+			exit();
+		}
+
 		// Perform any actions submitted by the user
 		switch($action)
 		{
-			case 'add':
-				// Add image handle in the admin controller
-				$admin_controller->add_image();
-				return;
-			break;
-
 			case 'delete':
 				// Use a confirm box routine when deleting a image
 				if (confirm_box(true))
@@ -64,9 +76,9 @@ class uploadimage_module
 			break;
 
 			case 'details':
-				// Load the extension detail page
+				$user->add_lang_ext('forumhulp/uploadimage', 'info_acp_uploadimage');
 				$this->tpl_name = 'acp_ext_details';
-				$admin_controller->details();
+				$phpbb_container->get('forumhulp.helper')->detail('forumhulp/uploadimage');
 				return;
 			break;
 

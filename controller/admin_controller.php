@@ -9,54 +9,28 @@
 
 namespace forumhulp\uploadimage\controller;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
 * Admin controller
 */
 class admin_controller
 {
-	/** @var \phpbb\controller\helper */
-	protected $helper;
-
-	/** @var \phpbb\request\request */
+	protected $u_action;
+	
+	protected $config;
 	protected $request;
-
-	/** @var \phpbb\template\template */
-	protected $template;
-
-	/** @var \phpbb\user */
 	protected $user;
-
-	/** @var ContainerInterface */
 	protected $phpbb_container;
-
-	/** @var  \phpbb\cache */
+	protected $template;
+	protected $path_helper;
 	protected $cache;
-
-	/** @var \phpbb\pagination */
 	protected $pagination;
-
-	/** @var \phpbb\log\log */
 	protected $log;
-
-	/** @var string phpBB root path */
+	protected $plupload;
 	protected $root_path;
-
-	/** @var string phpEx */
 	protected $php_ext;
 
-	/** string Custom form action */
-	protected $u_action;
-
-	/**
-	* Array of allowed image extensions
-	* Array is used for setting the allowed extensions in the fileupload class
-	* and as a base for a regex of allowed extensions, which will be formed by
-	* imploding the array with a "|".
-	*
-	* @var array
-	*/
 	protected $allowed_extensions = array(
 		'gif',
 		'jpg',
@@ -67,22 +41,16 @@ class admin_controller
 	/**
 	* Constructor
 	*
-	* @param \phpbb\controller\helper             $helper           Controller helper object
-	* @param \phpbb\request\request               $request          Request object
-	* @param \phpbb\template\template             $template         Template object
-	* @param \phpbb\user                          $user             User object
-	* @param ContainerInterface                   $phpbb_container  Service container interface
-	* @param string                               $root_path        phpBB root path
 	* @access public
 	*/
-	public function __construct(\phpbb\controller\helper $helper, \phpbb\path_helper $path_helper, \phpbb\request\request $request, \phpbb\template\template $template, \phpbb\user $user, ContainerInterface $phpbb_container, \phpbb\cache\service $cache, \phpbb\pagination $pagination, \phpbb\log\log $log, \phpbb\plupload\plupload $plupload, $root_path, $php_ext)
+	public function __construct(\phpbb\config\config $config, \phpbb\request\request $request, \phpbb\user $user, Container $phpbb_container, \phpbb\template\template $template, \phpbb\path_helper $path_helper, \phpbb\cache\service $cache, \phpbb\pagination $pagination, \phpbb\log\log $log, \phpbb\plupload\plupload $plupload, $root_path, $php_ext)
 	{
-		$this->helper = $helper;
-		$this->path_helper = $path_helper;
+		$this->config = $config;
 		$this->request = $request;
-		$this->template = $template;
 		$this->user = $user;
-		$this->container = $phpbb_container;
+		$this->phpbb_container = $phpbb_container;
+		$this->template = $template;
+		$this->path_helper = $path_helper;
 		$this->cache = $cache;
 		$this->pagination = $pagination;
 		$this->log = $log;
@@ -101,7 +69,7 @@ class admin_controller
 	{
 		$error = $attachment_data = array();
 		$this->user->add_lang('posting');  // For error messages
-		$s_action = $this->u_action . '&action=add';
+		$s_action = $this->u_action; // . '&action=add';
 		$form_enctype = (@ini_get('file_uploads') == '0' || strtolower(@ini_get('file_uploads')) == 'off') ? '' : ' enctype="multipart/form-data"';
 		$max_filesize = @ini_get("upload_max_filesize");
 
@@ -128,7 +96,7 @@ class admin_controller
 		// Start assigning vars for main page ...
 		$this->template->assign_vars(array(
 			'ERROR'						=> (sizeof($error)) ? implode('<br />', $error) : '',
-			'S_FORM_ENCTYPE'			=> $form_enctype,
+			'S_FORM_ENCTYPE_IU'			=> $form_enctype,
 			'S_POST_ACTION'				=> $s_action,
 			'FILESIZE'					=> $max_filesize,
 			'S_ATTACH_DATA'				=> json_encode(array() /*$message_parser->attachment_data*/),
@@ -145,7 +113,6 @@ class admin_controller
 		// This path is sent with the base template paths in the assign_vars()
 		// call below. We need to correct it in case we are accessing from a
 		// controller because the web paths will be incorrect otherwise.
-		$phpbb_path_helper = $this->container->get('path_helper');
 		$corrected_path = $this->path_helper->get_web_root_path();
 		$image_path = ((defined('PHPBB_USE_BOARD_URL_PATH') && PHPBB_USE_BOARD_URL_PATH) ? $board_url : $corrected_path) . 'images/ui/';
 		if (!is_dir($image_path))
@@ -256,56 +223,6 @@ class admin_controller
 	}
 
 	/**
-	* Details
-	*
-	* @access public
-	*/
-	public function details()
-	{
-		global $config, $phpbb_extension_manager;
-		$this->user->add_lang(array('install', 'acp/extensions', 'migrator'));
-		$ext_name = 'forumhulp/uploadimage';
-		$md_manager = new \phpbb\extension\metadata_manager($ext_name, $config, $phpbb_extension_manager, $this->template, $this->user, $this->root_path);
-		try
-		{
-			$this->metadata = $md_manager->get_metadata('all');
-		}
-		catch(\phpbb\extension\exception $e)
-		{
-			trigger_error($e, E_USER_WARNING);
-		}
-
-		$md_manager->output_template_data();
-
-		try
-		{
-			$updates_available = $this->version_check($md_manager, $this->request->variable('versioncheck_force', false));
-
-			$this->template->assign_vars(array(
-				'S_UP_TO_DATE'		=> empty($updates_available),
-				'S_VERSIONCHECK'	=> true,
-				'UP_TO_DATE_MSG'	=> $this->user->lang(empty($updates_available) ? 'UP_TO_DATE' : 'NOT_UP_TO_DATE', $md_manager->get_metadata('display-name')),
-			));
-
-			foreach ($updates_available as $branch => $version_data)
-			{
-				$this->template->assign_block_vars('updates_available', $version_data);
-			}
-		}
-		catch (\RuntimeException $e)
-		{
-			$this->template->assign_vars(array(
-				'S_VERSIONCHECK_STATUS'			=> $e->getCode(),
-				'VERSIONCHECK_FAIL_REASON'		=> ($e->getMessage() !== $this->user->lang('VERSIONCHECK_FAIL')) ? $e->getMessage() : '',
-			));
-		}
-
-		$this->template->assign_vars(array(
-			'U_BACK'				=> $this->u_action . '&amp;action=list',
-		));
-	}
-
-	/**
 	* Delete a image
 	*
 	* @param string $image_id The path identifier to delete
@@ -315,7 +232,7 @@ class admin_controller
 	public function delete_image($image_id)
 	{
 		// Delete the image
-		@unlink($this->root_path . $image_id);
+		@unlink($this->root_path . 'images/ui/' . $image_id);
 
 		// Log the action
 		$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'ACP_IMAGE_DELETED_LOG', time(), array($image_id));
@@ -357,26 +274,37 @@ class admin_controller
 		$error = array();
 		$this->attachment_data = array();
 
+		if (version_compare($this->config['version'], '3.2.*', '<'))
+		{
+			include($this->root_path . 'includes/functions_upload.' . $this->php_ext);
+			$upload = new \fileupload();
+			$upload->set_allowed_extensions($this->allowed_extensions);
+		} else
+		{
+			$upload = $this->phpbb_container->get('files.factory')->get('upload')
+				->set_error_prefix('AVATAR_')
+				->set_allowed_extensions($this->allowed_extensions)
+				->set_max_filesize(0)
+				->set_allowed_dimensions(0,0,0,0)
+				->set_disallowed_content((isset($this->config['mime_triggers']) ? explode('|', $this->config['mime_triggers']) : false));
+		}
+
 		$this->user->add_lang('posting');
-		include($this->root_path . 'includes/functions_upload.' . $this->php_ext);
-		$upload = new \fileupload();
-		$upload->set_allowed_extensions(array('jpg', 'gif', 'jpeg', 'png'));
 		$upload_dir = $this->root_path . 'images/ui/';
 
-		$file = $upload->form_upload('fileupload');
+		$file = (version_compare($this->config['version'], '3.2.*', '<')) ? $upload->form_upload('fileupload') : $upload->handle_upload('files.types.form', 'fileupload');
 		$file->clean_filename('real');
-		$file->move_file(str_replace($this->root_path, '', $upload_dir), true, true);
+		$file->move_file(str_replace($this->root_path, '', $upload_dir), true, true, 0775);
 
-		$download_url = chmod($upload_dir . $file->realname, 0775);
+		$download_url = $upload_dir . $file->get('realname');
 		$new_entry = array(
-			'attach_id'		=> rand(1, 9),
+			'attach_id'		=> rand(1000,10000),
 			'is_orphan'		=> 1,
-			'real_filename'	=> $file->realname,
-			'attach_comment'=> 'comment',
-			'filesize'		=> $file->filesize,
+			'real_filename'	=> $file->get('realname'),
+			'filesize'		=> $file->get('filesize'),
 		);
 
-		$this->attachment_data = array_merge(array(0 => $new_entry), $this->attachment_data);
+		$this->attachment_data = array_merge(array($new_entry['attach_id'] => $new_entry), $this->attachment_data);
 		if (isset($this->plupload) && $this->plupload->is_active())
 		{
 			$json_response = new \phpbb\json_response();
@@ -419,34 +347,5 @@ class admin_controller
 			}
 		}
 		return true;
-	}
-
-	/**
-	 * Check the version and return the available updates.
-	 *
-	 * @param \phpbb\extension\metadata_manager $md_manager The metadata manager for the version to check.
-	 * @param bool $force_update Ignores cached data. Defaults to false.
-	 * @param bool $force_cache Force the use of the cache. Override $force_update.
-	 * @return string
-	 * @throws RuntimeException
-	 */
-	protected function version_check(\phpbb\extension\metadata_manager $md_manager, $force_update = false, $force_cache = false)
-	{
-		global $cache, $config, $user;
-		$meta = $md_manager->get_metadata('all');
-
-		if (!isset($meta['extra']['version-check']))
-		{
-			throw new \RuntimeException($user->lang('NO_VERSIONCHECK'), 1);
-		}
-
-		$version_check = $meta['extra']['version-check'];
-
-		$version_helper = new \phpbb\version_helper($cache, $config, new \phpbb\file_downloader(), $user);
-		$version_helper->set_current_version($meta['version']);
-		$version_helper->set_file_location($version_check['host'], $version_check['directory'], $version_check['filename']);
-		$version_helper->force_stability($config['extension_force_unstable'] ? 'unstable' : null);
-
-		return $updates = $version_helper->get_suggested_updates($force_update, $force_cache);
 	}
 }

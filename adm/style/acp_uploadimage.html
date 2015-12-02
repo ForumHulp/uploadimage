@@ -1,10 +1,11 @@
 <!-- IF S_ALLOW_CDN -->
 <!-- INCLUDECSS //maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css -->
 <!-- ELSE -->
-<!-- INCLUDECSS {ROOT_PATH}ext/forumhulp/uploadimage/vendor/font-awesome/css/font-awesome.min.css -->
+<!-- INCLUDECSS {ROOT_PATH}ext/forumhulp/helper/css/font-awesome.min.css -->
 <!-- ENDIF -->
 <!-- INCLUDECSS css/upload.css -->
-<!-- INCLUDECSS css/jquery.simpledialog.css -->
+<!-- INCLUDECSS {ROOT_PATH}ext/forumhulp/helper/css/jquery.simpledialog.css -->
+<!-- INCLUDECSS {ROOT_PATH}ext/forumhulp/helper/css/ext_details.css -->
 <!-- INCLUDECSS css/plupload.css -->
 <!-- INCLUDE overall_header.html -->
 
@@ -17,11 +18,11 @@
 <hr />
 <div class="panel bg3 panel-container" id="attach-panel">
 	<div class="inner">
-	<form id="postform" method="post" action="{S_POST_ACTION}"{S_FORM_ENCTYPE}>
-	<div class="panel bg3 panel-container" id="attach-panel">
+	<form id="postform" method="post" action="{S_POST_ACTION}"{S_FORM_ENCTYPE_IU}>
+	<div class="panel bg3 panel-container">
 		<div class="inner">
 	
-		<p>{L_ADD_ATTACHMENT_EXPLAIN} <span class="hidden" id="drag-n-drop-message">{L_PLUPLOAD_DRAG_TEXTAREA}</span></p>
+		<p style="float:left;margin-left:10px;">{L_ADD_ATTACHMENT_EXPLAIN} <span class="hidden" id="drag-n-drop-message">{L_PLUPLOAD_DRAG_TEXTAREA}</span></p>
 		
 		<fieldset class="fields2" id="attach-panel-basic">
 		<dl>
@@ -41,7 +42,7 @@
 			<input type="button" class="button2" value="{L_PLUPLOAD_ADD_FILES}" id="add_files" />
 		</div>
 
-		<div class="panel<!-- IF not .attach_row --> hidden<!-- ENDIF -->" id="file-list-container">
+		<div class="panel<!-- IF not .attach_row --> hidden<!-- ENDIF -->" id="file-list-container" style="clear:both;">
 			<div class="inner">
 				<table class="table1 fixed-width-table">
 					<thead>
@@ -96,9 +97,9 @@
 		</div>
 	</div>
 	</form>
+	</div>
 </div>
 
-<!-- IF .image_list -->
 	<script type="text/javascript">
 		function flip(x)
 		{
@@ -106,6 +107,7 @@
 			if (xx.display=='' || xx.display=='none'){    xx.display = 'block';}else{    xx.display = 'none';}
 		}
 	</script>
+<!-- IF .image_list -->
     <table id="ext_table">
         <tr>
             <td class="row3" colspan="7"><strong>{L_IMAGE_LIST}</strong>
@@ -146,7 +148,6 @@
         </tr>
         <!-- END image_list -->
 		<tr><td colspan="6" style="text-align:right">{DIR_SIZE}</td><td></td></tr>
-        </tbody>
     </table>
 	<!-- IF .pagination or TOTAL_POSTS -->
 		<div class="pagination">
@@ -160,7 +161,7 @@
 <!-- ENDIF -->
 <br style="clear:both" />
 
-<!-- INCLUDEJS js/jquery.simpledialog.js -->
+<!-- INCLUDEJS {ROOT_PATH}ext/forumhulp/helper/js/jquery.simpledialog.js -->
 <!-- INCLUDEJS js/upload.js -->
 
 <!-- INCLUDE overall_footer.html -->

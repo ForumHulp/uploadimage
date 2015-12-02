@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\Container;
 class admin_controller
 {
 	protected $u_action;
-	
+
 	protected $config;
 	protected $request;
 	protected $user;

@@ -59,7 +59,7 @@ class uploadimage_module
 		}
 
 		// Perform any actions submitted by the user
-		switch($action)
+		switch ($action)
 		{
 			case 'delete':
 				// Use a confirm box routine when deleting a image

@@ -187,7 +187,7 @@ class admin_controller
 		$base_url = $this->u_action . '&amp;sk=' . $sort_key . '&amp;sd=' . $sort_dir . (($search) ? '&amp;keywords=' . $search: '');
 		$this->pagination->generate_template_pagination($base_url, 'pagination', 'start', $image_count, $per_page, $start);
 
-		for($i = $start; $i < $image_count && $i < $start + $per_page; $i++)
+		for ($i = $start; $i < $image_count && $i < $start + $per_page; $i++)
 		{
 			$this->template->assign_block_vars('image_list', array(
 				'ID'		=> $i + 1,

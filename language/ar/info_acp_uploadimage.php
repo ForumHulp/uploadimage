@@ -19,13 +19,26 @@ if (empty($lang) || !is_array($lang))
 }
 
 $lang = array_merge($lang, array(
-	'ACP_IMAGE_MANAGEMENT'			=> 'رفع الصور',
-	'ACP_IMAGE_TITLE'				=> 'رفع الصور',
-	'FH_HELPER_NOTICE'		=> 'Forumhulp helper application does not exist!<br />Download <a href="https://github.com/ForumHulp/helper" target="_blank">forumhulp/helper</a> and copy the helper folder to your forumhulp extension folder.',
-	'UPLOADIMAGE_NOTICE'			=> '<div class="phpinfo"><p class="entry">This extension resides in %1$s » %2$s » %3$s.<br />Upload images of a size you want to use!</p></div>',
-	'ACP_IMAGE_DELETE_ERRORED'		=> 'يوجد خطأ',
-	'ACP_IMAGE_DELETE_SUCCESS'		=> 'تم حذف الصورة',
-	'ACP_IMAGE_DELETED_LOG'			=> '<strong>تم حذف الصورة</strong><br />» %1s',
+	'ACP_UPLOAD_IMAGE_TITLE'			=> 'رفع الصور',
+	'ACP_IMAGE_TITLE'					=> 'رفع الصور',
+	'ACP_UPLOAD_IMAGE_TITLE_EXPLAIN'	=> 'هذه الإضافة تعطيك امكانية رفع الصور إلى مجلد الصور في منتداك. سيتم انشاء مجلد بإسم ui تلقائياً عند تفعيل هذه الإضافة وسيحتوي على جميع الصور التي تريد رفعها. <br />تستطيع عرض الصور في المنتدى بواسطة نسخ رابط الصورة بسهولة عند النقر على %1$s الرابط. <br />يجب عليك أخذ الحيطة عند حذف الصور لأنه لا يُمكن التأكد من استمرارية استخدام الصورة أو لا.',
+
+	'IMAGE_LIST'						=> 'قائمة الصور',
+	'IMAGE_PATH'						=> 'رابط الصورة',
+	'IMAGE_NAME'						=> 'اسم الصورة',
+	'FORMAT'							=> 'الأبعاد',
+	'SIZE'								=> 'الحجم',
+	'FOLDER_SIZE'						=> 'Foldersize',
+	'IMG_FOLDER'						=> 'Change image folder where images are uploaded',
+	'ACP_IMAGE_COPY_PATH'				=> 'Copy image path',
+	'IMAGE_DELETE'						=> 'حذف',
+	'ACP_IMAGE_DELETE_CONFIRM' 			=> 'هل أنت متأكد من حذف الصورة ?',
+
+	'ACP_IMAGE_DELETE_SUCCESS'			=> 'تم حذف الصورة',
+	'ACP_IMAGE_DELETED_LOG'				=> '<strong>تم حذف الصورة</strong><br />» %1s',
+
+	'UPLOADIMAGE_NOTICE'				=> '<div class="phpinfo"><p class="entry">This extension resides in %1$s » %2$s » %3$s.<br />Upload images of a size you want to use!</p></div>',
+	'FH_HELPER_NOTICE'					=> 'Forumhulp helper application does not exist!<br />Download <a href="https://github.com/ForumHulp/helper" target="_blank">forumhulp/helper</a> and copy the helper folder to your forumhulp extension folder.',
 ));
 
 // Description of extension

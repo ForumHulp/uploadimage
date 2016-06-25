@@ -6,14 +6,15 @@
 <!-- INCLUDECSS css/upload.css -->
 <!-- INCLUDECSS {ROOT_PATH}ext/forumhulp/helper/css/jquery.simpledialog.css -->
 <!-- INCLUDECSS {ROOT_PATH}ext/forumhulp/helper/css/ext_details.css -->
+<!-- INCLUDECSS css/font-awesome.min.css -->
 <!-- INCLUDECSS css/plupload.css -->
 <!-- INCLUDE overall_header.html -->
-
+<script src="{ROOT_PATH}ext/forumhulp/uploadimage/adm/style/js/clipboard.min.js"></script>
 <a name="maincontent"></a>
 
 <h1>{L_ACP_UPLOAD_IMAGE_TITLE} <a href="{U_ACTION}&amp;action=details" class="simpledialog"><i class="fa fa-info-circle"></i></a></h1>
 
-<p>{L_ACP_UPLOAD_IMAGE_TITLE_EXPLAIN}</p>
+<p>{ACP_UPLOAD_IMAGE_TITLE_EXPLAIN}</p>
 
 <hr />
 <div class="panel bg3 panel-container" id="attach-panel">
@@ -100,18 +101,16 @@
 	</div>
 </div>
 
-	<script type="text/javascript">
-		function flip(x)
-		{
-			xx = document.getElementById(x).style;
-			if (xx.display=='' || xx.display=='none'){    xx.display = 'block';}else{    xx.display = 'none';}
-		}
-	</script>
 <!-- IF .image_list -->
     <table id="ext_table">
         <tr>
             <td class="row3" colspan="7"><strong>{L_IMAGE_LIST}</strong>
-				<form method="post" action="" style="float:right;">
+				<form method="post" action="" style="margin-left:10px;display:inline-block;">
+					<input class="keyword" type="text" name="img_folder" id="img_folder" value="{IMG_FOLDER}" title="{L_IMG_FOLDER}" />
+					<input type="hidden" name="imgfolder" value="img_folder" />
+				</form>
+
+                <form method="post" action="" style="float:right;">
 					<input class="keyword" type="text" name="keyword" id="keyword" value="{KEYWORD}" title="{L_SEARCH}" placeholder="&#xf002;" />
 					<input type="hidden" name="search" value="" />
 				</form>
@@ -136,18 +135,18 @@
        <!-- BEGIN image_list -->
         <tr onmouseover="this.className='ruleractueel';" onmouseout="this.className='column';" class="column">
 			<td>{image_list.ID}</td>
-            <td style="cursor:pointer;" onmouseover="javascript:flip('image{image_list.ID}')" onmouseout="javascript:flip('image{image_list.ID}')">
+            <td class="hoverinfo" data-id="{image_list.ID}">
 			<img style="height:12px;" src="{image_list.IMAGEPATH}" />
-			<img id="image{image_list.ID}" style="position: absolute;z-index:1000;display:none;" title="{image_list.FILENAME}" src="{image_list.IMAGEPATH}" width="210px" />
+			<img id="image{image_list.ID}" class="image" style="position: absolute;z-index:1000;display:none;" title="{image_list.FILENAME}" src="{image_list.IMAGEPATH}" width="210px" />
 			</td>
-			<td style="width:210px;"><span id="path{image_list.ID}" class="unc_path" style="display:block; width:210px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{image_list.PATH}</span></td>
+			<td style="width:250px;"><span id="path{image_list.ID}" class="unc_path" style="display:block; float:left;width:210px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{image_list.PATH}</span> <i class="icon-copy iconcopy" data-clipboard-target="#path{image_list.ID}" title="{L_ACP_IMAGE_COPY_PATH}" style="float:right;display:inline-block;margin-right:10px;cursor:pointer;"></i></td>
             <td style="display:block; width:200px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{image_list.NAME}</td>
             <td style="text-align: center;">{image_list.WIDTH} px * {image_list.WIDTH} px</td>
             <td style="text-align: center;">{image_list.SIZE}</td>
             <td style="text-align: center;"><a href="{image_list.DELLURL}" data-ajax="row_delete">{L_IMAGE_DELETE}</a></td>
         </tr>
         <!-- END image_list -->
-		<tr><td colspan="6" style="text-align:right">{DIR_SIZE}</td><td></td></tr>
+		<tr><td colspan="3"><span id="clipboardmsg" style="font-size:10px;">&nbsp;</span></td><td colspan="3" style="text-align:right">{L_FOLDER_SIZE}: {DIR_SIZE}</td><td></td></tr>
     </table>
 	<!-- IF .pagination or TOTAL_POSTS -->
 		<div class="pagination">

@@ -15,13 +15,28 @@ if (empty($lang) || !is_array($lang))
 	$lang = array();
 }
 $lang = array_merge($lang, array(
-	'ACP_IMAGE_MANAGEMENT'			=> 'Laadi pilte üles',
-	'ACP_IMAGE_TITLE'				=> 'Laadi pilte üles',
-	'FH_HELPER_NOTICE'		=> 'Forumhulp helper application does not exist!<br />Download <a href="https://github.com/ForumHulp/helper" target="_blank">forumhulp/helper</a> and copy the helper folder to your forumhulp extension folder.',
-	'UPLOADIMAGE_NOTICE'			=> '<div class="phpinfo"><p class="entry">This extension resides in %1$s » %2$s » %3$s.<br />Upload images of a size you want to use!</p></div>',
-	'ACP_IMAGE_DELETE_ERRORED'		=> 'Midagi läks valesti',
-	'ACP_IMAGE_DELETE_SUCCESS'		=> 'Pilt kustutatud',
-	'ACP_IMAGE_DELETED_LOG'			=> '<strong>Pilt kustutatud</strong><br />» %1s',
+	'ACP_UPLOAD_IMAGE_TITLE'			=> 'Laadi pilte üles',
+	'ACP_IMAGE_TITLE'					=> 'Laadi pilte üles',
+	'ACP_UPLOAD_IMAGE_TITLE_EXPLAIN'	=> 'Laadi pilte üles laiendus lubab sul üles laadida pilte oma foorumi <i>images</i> kausta läbi AJP. %1$s kausta kasutatakse piltide jaoks, ning luuakse automaatselt kui lubatakse laiendus AJP "Kohanda" -> "Halda laiendusi" vahelehel.<br />
+	Kopeeri pildi teekond lihtsalt vajutades ja kasuta seda kleepides kus iganes sa soovid näidata oma pilti.
+	Kustutades pilte ole hoolikas, kuna pilte ei kontrollita enne kas pilt on kuskil veel kasutusel.',
+
+	'IMAGE_LIST'						=> 'Nimekiri piltidest',
+	'IMAGE_PATH'						=> 'Pildi teekond',
+	'IMAGE_NAME'						=> 'Pildi-nimi',
+	'FORMAT'							=> 'Formaat',
+	'SIZE'								=> 'Suurus',
+	'FOLDER_SIZE'						=> 'Foldersize',
+	'IMG_FOLDER'						=> 'Folder images are uploaded',
+	'ACP_IMAGE_COPY_PATH'				=> 'Copy image path',
+	'IMAGE_DELETE'						=> 'Kustuta',
+	'ACP_IMAGE_DELETE_CONFIRM' 			=> 'kindel et soovid kustutada pilti?',
+
+	'ACP_IMAGE_DELETE_SUCCESS'			=> 'Pilt kustutatud',
+	'ACP_IMAGE_DELETED_LOG'				=> '<strong>Pilt kustutatud</strong><br />» %1s',
+
+	'UPLOADIMAGE_NOTICE'				=> '<div class="phpinfo"><p class="entry">This extension resides in %1$s » %2$s » %3$s.<br />Upload images of a size you want to use!</p></div>',
+	'FH_HELPER_NOTICE'					=> 'Forumhulp helper application does not exist!<br />Download <a href="https://github.com/ForumHulp/helper" target="_blank">forumhulp/helper</a> and copy the helper folder to your forumhulp extension folder.',
 ));
 
 // Description of extension

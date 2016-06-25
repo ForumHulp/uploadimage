@@ -21,7 +21,7 @@ class uploadimage_info
 				'main'		=> array(
 					'title'	=> 'ACP_IMAGE_TITLE',
 					'auth'	=> 'ext_forumhulp/uploadimage && acl_a_styles',
-					'cat'	=> array('ACP_IMAGE_MANAGEMENT')
+					'cat'	=> array('ACP_UPLOAD_IMAGE_TITLE')
 				),
 			),
 		);

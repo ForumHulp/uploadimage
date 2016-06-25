@@ -35,9 +35,9 @@ class m1_initial_module extends \phpbb\db\migration\migration
 	public function update_data()
 	{
 		return array(
-			array('module.add', array('acp', 'ACP_CAT_CUSTOMISE', 'ACP_IMAGE_MANAGEMENT')),
+			array('module.add', array('acp', 'ACP_CAT_CUSTOMISE', 'ACP_UPLOAD_IMAGE_TITLE')),
 			array('module.add', array(
-				'acp', 'ACP_IMAGE_MANAGEMENT', array(
+				'acp', 'ACP_UPLOAD_IMAGE_TITLE', array(
 					'module_basename'	=> '\forumhulp\uploadimage\acp\uploadimage_module',
 					'modes'				=> array('main'),
 				),

@@ -19,14 +19,27 @@ if (empty($lang) || !is_array($lang))
 }
 
 $lang = array_merge($lang, array(
-	'ACP_IMAGE_MANAGEMENT'			=> 'Bilduppladdning',
-	'ACP_IMAGE_TITLE'				=> 'Ladda upp en bild',
-	'FH_HELPER_NOTICE'		=> 'Forumhulp helper application does not exist!<br />Download <a href="https://github.com/ForumHulp/helper" target="_blank">forumhulp/helper</a> and copy the helper folder to your forumhulp extension folder.',
-	'UPLOADIMAGE_NOTICE'			=> '<div class="phpinfo"><p class="entry">This extension resides in %1$s » %2$s » %3$s.<br />Upload images of a size you want to use!</p></div>',
-	'ACP_IMAGE_DELETE_ERRORED'		=> 'Något blev fel',
-	'ACP_IMAGE_DELETE_SUCCESS'		=> 'Bilden laddades upp',
-	'ACP_IMAGE_DELETED_LOG'			=> '<strong>Bilden raderad</strong><br />Â» %1s',
-));
+	'ACP_UPLOAD_IMAGE_TITLE'			=> 'Bilduppladdning',
+	'ACP_IMAGE_TITLE'					=> 'Ladda upp en bild',
+	'ACP_UPLOAD_IMAGE_TITLE_EXPLAIN'	=> 'Med Bilduppladdningen kan du ladda upp bilder till ditt forums bild-katalog (images). Bilderna sparas i underkatalogen %1$s som skapas automatiskt när detta tillägg aktiveras.<br />Kopiera bildsökvägen genom att klicka på den och klistra in den där du vill använda bilden. Var försiktig när du raderar bilder eftersom ingen kontroll genomförs om bilden fortfarande används.',
+
+	'IMAGE_LIST'						=> 'Bildlista',
+	'IMAGE_PATH'						=> 'Bildsökväg',
+	'IMAGE_NAME'						=> 'Bildnamn',
+	'FORMAT'							=> 'Format',
+	'SIZE'								=> 'Storlek',
+	'FOLDER_SIZE'						=> 'Foldersize',
+	'IMG_FOLDER'						=> 'Folder images are uploaded',
+	'ACP_IMAGE_COPY_PATH'				=> 'Copy image path',
+	'IMAGE_DELETE'						=> 'Radera',
+	'ACP_IMAGE_DELETE_CONFIRM'			=> 'är du säker på att du vill radera bilden?',
+
+	'ACP_IMAGE_DELETE_SUCCESS'			=> 'Bilden laddades upp',
+	'ACP_IMAGE_DELETED_LOG'				=> '<strong>Bilden raderad</strong><br />Â» %1s',
+
+	'UPLOADIMAGE_NOTICE'				=> '<div class="phpinfo"><p class="entry">This extension resides in %1$s » %2$s » %3$s.<br />Upload images of a size you want to use!</p></div>',
+	'FH_HELPER_NOTICE'					=> 'Forumhulp helper application does not exist!<br />Download <a href="https://github.com/ForumHulp/helper" target="_blank">forumhulp/helper</a> and copy the helper folder to your forumhulp extension folder.',
+	));
 
 // Description of extension
 $lang = array_merge($lang, array(

@@ -18,7 +18,7 @@ class uploadimage_module
 		global $phpbb_container, $request, $user;
 
 		// Add the ACP lang file
-		$user->add_lang_ext('forumhulp/uploadimage', 'uploadimage');
+	//	$user->add_lang_ext('forumhulp/uploadimage', 'uploadimage');
 
 		// Get an instance of the admin controller
 		$admin_controller = $phpbb_container->get('forumhulp.uploadimage.admin.controller');
@@ -34,6 +34,11 @@ class uploadimage_module
 
 		// Set the page title for our ACP page
 		$this->page_title = $user->lang('ACP_UPLOAD_IMAGE_TITLE');
+
+		if ($request->is_set_post('imgfolder'))
+		{
+			$admin_controller->rename_folder();
+		}
 
 		if ($request->is_set_post('delete_file'))
 		{

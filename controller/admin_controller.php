@@ -99,7 +99,9 @@ class admin_controller
 			'S_FORM_ENCTYPE_IU'			=> $form_enctype,
 			'S_POST_ACTION'				=> $s_action,
 			'FILESIZE'					=> $max_filesize,
-			'S_ATTACH_DATA'				=> json_encode(array() /*$message_parser->attachment_data*/),
+			'IMG_FOLDER'				=> $this->config['uploadimage_folder'],
+			'ACP_UPLOAD_IMAGE_TITLE_EXPLAIN' => $this->user->lang('ACP_UPLOAD_IMAGE_TITLE_EXPLAIN', $this->config['uploadimage_folder']),
+			'S_ATTACH_DATA'				=> json_encode(array()),
 		));
 
 		// Show attachment box for adding attachments if true
@@ -114,7 +116,7 @@ class admin_controller
 		// call below. We need to correct it in case we are accessing from a
 		// controller because the web paths will be incorrect otherwise.
 		$corrected_path = $this->path_helper->get_web_root_path();
-		$image_path = ((defined('PHPBB_USE_BOARD_URL_PATH') && PHPBB_USE_BOARD_URL_PATH) ? $board_url : $corrected_path) . 'images/ui/';
+		$image_path = ((defined('PHPBB_USE_BOARD_URL_PATH') && PHPBB_USE_BOARD_URL_PATH) ? $board_url : $corrected_path) . 'images/' . $this->config['uploadimage_folder'] . '/';
 		if (!is_dir($image_path))
 		{
 			$this->recursive_mkdir($image_path, 0775);
@@ -223,6 +225,23 @@ class admin_controller
 	}
 
 	/**
+	* Rename image folder
+	*
+	* @return null
+	* @access public
+	*/
+	public function rename_folder()
+	{
+		$uploadimage_folder = $this->request->variable('img_folder', 'ui');
+		if (strpbrk($uploadimage_folder, "\\/?%*:|\"<>") === false)
+		{
+			rename ($this->root_path . 'images/' . $this->config['uploadimage_folder'], $this->root_path . 'images/' . $uploadimage_folder);
+			chmod($this->root_path . 'images/' . $uploadimage_folder, 0775);
+			$this->config->set('uploadimage_folder', $uploadimage_folder);
+		}
+	}
+
+	/**
 	* Delete a image
 	*
 	* @param string $image_id The path identifier to delete
@@ -232,7 +251,7 @@ class admin_controller
 	public function delete_image($image_id)
 	{
 		// Delete the image
-		@unlink($this->root_path . 'images/ui/' . $image_id);
+		@unlink($this->root_path . 'images/' . $this->config['uploadimage_folder'] . '/' . $image_id);
 
 		// Log the action
 		$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'ACP_IMAGE_DELETED_LOG', time(), array($image_id));
@@ -290,11 +309,12 @@ class admin_controller
 		}
 
 		$this->user->add_lang('posting');
-		$upload_dir = $this->root_path . 'images/ui/';
+		$upload_dir = $this->root_path . 'images/' . $this->config['uploadimage_folder'] . '/';
 
 		$file = (version_compare($this->config['version'], '3.2.*', '<')) ? $upload->form_upload('fileupload') : $upload->handle_upload('files.types.form', 'fileupload');
 		$file->clean_filename('real');
 		$file->move_file(str_replace($this->root_path, '', $upload_dir), true, true, 0775);
+		chmod($upload_dir . $file->get('realname'), 0775);
 
 		$download_url = $upload_dir . $file->get('realname');
 		$new_entry = array(

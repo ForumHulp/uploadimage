@@ -3,7 +3,7 @@
     "type": "phpbb-extension",
     "description": "Upload Images enables you to upload images in your images folder of your board. The ui folder is used for the images and is created automatically when enabling this extension. Copy imagepath simply by clicking and use it wherever you want to show your image. Be careful with deleting images as there is no check if the image is still used.",
     "homepage": "http://forumhulp.com",
-    "version": "3.1.0",
+    "version": "3.1.1",
     "keywords": ["style", "forumhulp", "phpbb", "extension", "upload", "unzip", "zip"],
     "license": "GPL-2.0",
     "authors": [

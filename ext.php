@@ -44,7 +44,7 @@ class ext extends \phpbb\extension\base
 				(isset($this->container->get('user')->lang['UPLOADIMAGE_NOTICE']) ?
 				sprintf($this->container->get('user')->lang['UPLOADIMAGE_NOTICE'],
 						$this->container->get('user')->lang['ACP_CAT_CUSTOMISE'],
-						$this->container->get('user')->lang['ACP_IMAGE_MANAGEMENT'],
+						$this->container->get('user')->lang['ACP_UPLOAD_IMAGE_TITLE'],
 						$this->container->get('user')->lang['ACP_IMAGE_TITLE']) : ''));
 		}
 		// Run parent enable step method

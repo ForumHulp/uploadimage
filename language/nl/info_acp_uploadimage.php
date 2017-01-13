@@ -22,7 +22,7 @@ $lang = array_merge($lang, array(
 	'ACP_IMAGE_TITLE'					=> 'Upload Image',
 	'ACP_UPLOAD_IMAGE_TITLE_EXPLAIN'	=> 'Upload Images enables you to upload images in your images folder of your board. The %1$s folder is used for the images and is created automatically when enabling this extension.<br />Copy imagepath simply by clicking and use it wherever you want to show your image. Be careful with deleting images as there is no check if the image is still used.',
 
-	'IMAGE_LIST'						=> 'Image list',
+	'IMAGE_LIST'						=> 'Image map',
 	'IMAGE_PATH'						=> 'Imagepath',
 	'IMAGE_NAME'						=> 'Image-name',
 	'FORMAT'							=> 'Format',

@@ -7,16 +7,16 @@
 		closeLabel: '&times;'
 	});
 
-	$(".hoverinfo").mouseenter(function() {
+	$('body').on('mouseenter', '.hoverinfo', function() {
 			var val = $(this).data('id');
 			$(".image").fadeOut();
 			$("#image"+val).fadeIn();
 	});
-	$(".hoverinfo").mouseleave(function() {
+	$('body').on('mouseleave', '.hoverinfo', function() {
 			$(".image").fadeOut();
 	});
 
-	var clipboard = new Clipboard('.iconcopy');
+	var clipboard = new Clipboard('.fa-copy');
 	clipboard.on('success', function(e) {
 		$('#clipboardmsg').text('Clipboard action: ' + e.action);
 		e.clearSelection();

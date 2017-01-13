@@ -62,17 +62,15 @@ class admin_controller
 	/**
 	* Display the images
 	*
-	* @return null
-	* @access public
 	*/
 	public function display_images()
 	{
 		$error = $attachment_data = array();
-		$this->user->add_lang('posting');  // For error messages
-		$s_action = $this->u_action; // . '&action=add';
+		$this->user->add_lang('posting');
+		$s_action = $this->u_action;
 		$form_enctype = (@ini_get('file_uploads') == '0' || strtolower(@ini_get('file_uploads')) == 'off') ? '' : ' enctype="multipart/form-data"';
 		$max_filesize = @ini_get("upload_max_filesize");
-
+		
 		if (!empty($max_filesize))
 		{
 			$unit = strtolower(substr($max_filesize, -1, 1));
@@ -93,7 +91,6 @@ class admin_controller
 		}
 		add_form_key('postform');
 
-		// Start assigning vars for main page ...
 		$this->template->assign_vars(array(
 			'ERROR'						=> (sizeof($error)) ? implode('<br />', $error) : '',
 			'S_FORM_ENCTYPE_IU'			=> $form_enctype,
@@ -104,7 +101,6 @@ class admin_controller
 			'S_ATTACH_DATA'				=> json_encode(array()),
 		));
 
-		// Show attachment box for adding attachments if true
 		if ($form_enctype)
 		{
 			$this->plupload->configure($this->cache, $this->template, $s_action, 0, 10);
@@ -112,9 +108,6 @@ class admin_controller
 
 		// Determine board url - we may need it later
 		$board_url = generate_board_url() . '/';
-		// This path is sent with the base template paths in the assign_vars()
-		// call below. We need to correct it in case we are accessing from a
-		// controller because the web paths will be incorrect otherwise.
 		$corrected_path = $this->path_helper->get_web_root_path();
 		$image_path = ((defined('PHPBB_USE_BOARD_URL_PATH') && PHPBB_USE_BOARD_URL_PATH) ? $board_url : $corrected_path) . 'images/' . $this->config['uploadimage_folder'] . '/';
 		if (!is_dir($image_path))
@@ -203,7 +196,6 @@ class admin_controller
 			);
 		}
 
-		// Set output vars for display in the template
 		$this->template->assign_vars(array(
 			'U_ACTION'		=> $this->u_action,
 			'DIR_SIZE'		=> get_formatted_filesize($dir_size),
@@ -227,8 +219,6 @@ class admin_controller
 	/**
 	* Rename image folder
 	*
-	* @return null
-	* @access public
 	*/
 	public function rename_folder()
 	{
@@ -250,10 +240,7 @@ class admin_controller
 	*/
 	public function delete_image($image_id)
 	{
-		// Delete the image
 		@unlink($this->root_path . 'images/' . $this->config['uploadimage_folder'] . '/' . $image_id);
-
-		// Log the action
 		$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'ACP_IMAGE_DELETED_LOG', time(), array($image_id));
 
 		// If AJAX was used, show user a result message
@@ -328,7 +315,6 @@ class admin_controller
 		if (isset($this->plupload) && $this->plupload->is_active())
 		{
 			$json_response = new \phpbb\json_response();
-			// Send the client the attachment data to maintain state
 			$json_response->send(array('data' => $this->attachment_data, 'download_url' => $download_url));
 		}
 	}

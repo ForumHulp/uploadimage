@@ -1,12 +1,6 @@
-<!-- IF S_ALLOW_CDN -->
-<!-- INCLUDECSS //maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css -->
-<!-- ELSE -->
-<!-- INCLUDECSS {ROOT_PATH}ext/forumhulp/helper/css/font-awesome.min.css -->
-<!-- ENDIF -->
 <!-- INCLUDECSS css/upload.css -->
 <!-- INCLUDECSS {ROOT_PATH}ext/forumhulp/helper/css/jquery.simpledialog.css -->
 <!-- INCLUDECSS {ROOT_PATH}ext/forumhulp/helper/css/ext_details.css -->
-<!-- INCLUDECSS css/font-awesome.min.css -->
 <!-- INCLUDECSS css/plupload.css -->
 <!-- INCLUDE overall_header.html -->
 <script src="{ROOT_PATH}ext/forumhulp/uploadimage/adm/style/js/clipboard.min.js"></script>
@@ -33,7 +27,7 @@
 				<input type="submit" name="add_file" value="{L_ADD_FILE}" class="button2" onclick="upload = true;" />
 			</dd>
 		</dl>
-		<dl>
+		<dl style="display:none;">
 			<dt><label for="filecomment">{L_FILE_COMMENT}{L_COLON}</label></dt>
 			<dd><textarea name="filecomment" id="filecomment" rows="1" cols="40" class="inputbox autowidth">{FILE_COMMENT}</textarea></dd>
 		</dl>
@@ -139,7 +133,7 @@
 			<img style="height:12px;" src="{image_list.IMAGEPATH}" />
 			<img id="image{image_list.ID}" class="image" style="position: absolute;z-index:1000;display:none;" title="{image_list.FILENAME}" src="{image_list.IMAGEPATH}" width="210px" />
 			</td>
-			<td style="width:250px;"><span id="path{image_list.ID}" class="unc_path" style="display:block; float:left;width:210px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{image_list.PATH}</span> <i class="icon-copy iconcopy" data-clipboard-target="#path{image_list.ID}" title="{L_ACP_IMAGE_COPY_PATH}" style="float:right;display:inline-block;margin-right:10px;cursor:pointer;"></i></td>
+			<td style="width:250px;"><span id="path{image_list.ID}" class="unc_path" style="display:block; float:left;width:210px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{image_list.PATH}</span> <i class="fa fa-copy" data-clipboard-target="#path{image_list.ID}" title="{L_ACP_IMAGE_COPY_PATH}" style="float:right;display:inline-block;margin-right:10px;cursor:pointer;"></i></td>
             <td style="display:block; width:200px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{image_list.NAME}</td>
             <td style="text-align: center;">{image_list.WIDTH} px * {image_list.WIDTH} px</td>
             <td style="text-align: center;">{image_list.SIZE}</td>

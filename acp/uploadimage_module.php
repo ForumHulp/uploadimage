@@ -17,9 +17,6 @@ class uploadimage_module
 	{
 		global $phpbb_container, $request, $user;
 
-		// Add the ACP lang file
-	//	$user->add_lang_ext('forumhulp/uploadimage', 'uploadimage');
-
 		// Get an instance of the admin controller
 		$admin_controller = $phpbb_container->get('forumhulp.uploadimage.admin.controller');
 

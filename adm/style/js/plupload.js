@@ -181,10 +181,11 @@ phpbb.plupload.updateRow = function(index, downloadUrl) {
 		row = $('[data-attach-id="' + attach.attach_id + '"]');
 
 		var url = downloadUrl[0].replace('&amp;', '&');
-		row.find('.image-name').attr('id', 'image_' + attach.attach_id);
+		row.find('.image-name').attr('id', 'image' + attach.attach_id);
+		row.find('.image-name').addClass('image');
 		row.find('.image-name').attr('src', url);
-		row.find('.file-name').attr('onmouseover', 'javascript:flip(\'image_' + attach.attach_id + '\')');
-		row.find('.file-name').attr('onmouseout', 'javascript:flip(\'image_' + attach.attach_id + '\')');
+		row.find('.file-name').addClass('hoverinfo');
+		row.find('.file-name').attr('data-id', attach.attach_id);
 	}
 };
 

@@ -47,7 +47,7 @@ $lang = array_merge($lang, array(
 	'ext_details' => array(
 		'details' => array(
 			'DESCRIPTION_1'		=> 'Preview of images',
-			'DESCRIPTION_2'		=> 'Upload up to 10 images ',
+			'DESCRIPTION_2'		=> 'Upload up to 10 images',
 			'DESCRIPTION_3'		=> 'Image information',
 			'DESCRIPTION_4'		=> 'Easy path copying',
 		),

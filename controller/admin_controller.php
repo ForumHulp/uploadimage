@@ -10,6 +10,15 @@
 namespace forumhulp\uploadimage\controller;
 
 use Symfony\Component\DependencyInjection\Container;
+use phpbb\config\config;
+use phpbb\request\request;
+use phpbb\user;
+use phpbb\template\template;
+use phpbb\path_helper;
+use phpbb\cache\service;
+use phpbb\pagination;
+use phpbb\log\log;
+use phpbb\plupload\plupload;
 
 /**
 * Admin controller
@@ -30,20 +39,14 @@ class admin_controller
 	protected $plupload;
 	protected $root_path;
 	protected $php_ext;
-
-	protected $allowed_extensions = array(
-		'gif',
-		'jpg',
-		'jpeg',
-		'png',
-	);
+	protected $allowed_extensions = array('gif', 'jpg', 'jpeg', 'png');
 
 	/**
 	* Constructor
 	*
 	* @access public
 	*/
-	public function __construct(\phpbb\config\config $config, \phpbb\request\request $request, \phpbb\user $user, Container $phpbb_container, \phpbb\template\template $template, \phpbb\path_helper $path_helper, \phpbb\cache\service $cache, \phpbb\pagination $pagination, \phpbb\log\log $log, \phpbb\plupload\plupload $plupload, $root_path, $php_ext)
+	public function __construct(config $config, request $request, user $user, Container $phpbb_container, template $template, path_helper $path_helper, service $cache, pagination $pagination, log $log, plupload $plupload, $root_path, $php_ext)
 	{
 		$this->config = $config;
 		$this->request = $request;
@@ -80,13 +83,10 @@ class admin_controller
 			{
 				case 'g':
 					$max_filesize *= 1024;
-				// no break
 				case 'm':
 					$max_filesize *= 1024;
-				// no break
 				case 'k':
 					$max_filesize *= 1024;
-				// no break
 			}
 		}
 		add_form_key('postform');
@@ -167,7 +167,7 @@ class admin_controller
 			'S_SORT_DIR'		=> $sort_dir
 		));
 
-		usort($image_list, function($a, $b) use ($sql_sort)
+		uksort($image_list, function($a, $b) use ($sql_sort)
 		{
 			return $a[$sql_sort] - $b[$sql_sort];
 		});
@@ -301,7 +301,7 @@ class admin_controller
 		$file = (version_compare($this->config['version'], '3.2.*', '<')) ? $upload->form_upload('fileupload') : $upload->handle_upload('files.types.form', 'fileupload');
 		$file->clean_filename('real');
 		$file->move_file(str_replace($this->root_path, '', $upload_dir), true, true, 0775);
-		chmod($upload_dir . $file->get('realname'), 0775);
+	//	chmod($upload_dir . $file->get('realname'), 0775);
 
 		$download_url = $upload_dir . $file->get('realname');
 		$new_entry = array(

@@ -52,7 +52,6 @@ class uploadimage_module
 		if ($request->is_set_post('add_file'))
 		{
 			$admin_controller->add_image();
-			exit();
 		}
 
 		// Perform any actions submitted by the user

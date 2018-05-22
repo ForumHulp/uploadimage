@@ -11,15 +11,15 @@
 <p>{ACP_UPLOAD_IMAGE_TITLE_EXPLAIN}</p>
 
 <hr />
-<div class="panel bg3 panel-container" id="attach-panel">
+<div class="panel bg3 panel-container">
 	<div class="inner">
 	<form id="postform" method="post" action="{S_POST_ACTION}"{S_FORM_ENCTYPE_IU}>
-	<div class="panel bg3 panel-container">
+	<div class="panel bg3 panel-container" id="attach-panel">
 		<div class="inner">
 	
 		<p style="float:left;margin-left:10px;">{L_ADD_ATTACHMENT_EXPLAIN} <span class="hidden" id="drag-n-drop-message">{L_PLUPLOAD_DRAG_TEXTAREA}</span></p>
 		
-		<fieldset class="fields2" id="attach-panel-basic">
+		<fieldset class="fields2" id="attach-panel-basic" style="clear:both;">
 		<dl>
 			<dt><label for="fileupload">{L_FILENAME}{L_COLON}</label></dt>
 			<dd>
@@ -33,7 +33,7 @@
 		</dl>
 		</fieldset>
 
-		<div id="attach-panel-multi">
+		<div id="attach-panel-multi" class="attach-panel-multi">
 			<input type="button" class="button2" value="{L_PLUPLOAD_ADD_FILES}" id="add_files" />
 		</div>
 
@@ -135,7 +135,7 @@
 			</td>
 			<td style="width:250px;"><span id="path{image_list.ID}" class="unc_path" style="display:block; float:left;width:210px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{image_list.PATH}</span> <i class="fa fa-copy" data-clipboard-target="#path{image_list.ID}" title="{L_ACP_IMAGE_COPY_PATH}" style="float:right;display:inline-block;margin-right:10px;cursor:pointer;"></i></td>
             <td style="display:block; width:200px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{image_list.NAME}</td>
-            <td style="text-align: center;">{image_list.WIDTH} px * {image_list.WIDTH} px</td>
+            <td style="text-align: center;">{image_list.WIDTH} px * {image_list.HEIGHT} px</td>
             <td style="text-align: center;">{image_list.SIZE}</td>
             <td style="text-align: center;"><a href="{image_list.DELLURL}" data-ajax="row_delete">{L_IMAGE_DELETE}</a></td>
         </tr>

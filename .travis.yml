@@ -8,15 +8,21 @@ matrix:
   include:
     - php: 5.5
       env: DB=none;NOTESTS=1
+    - php: 5.3
+      env: PHPBB_BRANCH="3.1.x";DB=mysqli
     - php: 5.4
+      env: PHPBB_BRANCH="3.1.x";DB=mysqli
+    - php: 5.5
+      env: PHPBB_BRANCH="3.1.x";DB=mysqli
+    - php: 5.5
       env: DB=mysqli #myisam
-    - php: 5.4
+    - php: 5.5
       env: DB=mysql
-    - php: 5.4
+    - php: 5.5
       env: DB=mariadb
-    - php: 5.4
+    - php: 5.5
       env: DB=postgres
-    - php: 5.4
+    - php: 5.5
       env: DB=sqlite3
     - php: 5.5
       env: DB=mysqli
@@ -26,13 +32,14 @@ matrix:
       env: DB=mysqli
     - php: 7.1
       env: DB=mysqli
+    - php: 7.2
+      env: DB=mysqli
+    - php: 7.2
+      env: PHPBB_BRANCH="master";DB=mysqli
     - php: nightly
-      env: DB=mysqli
-    - php: hhvm
-      env: DB=mysqli
+      env: PHPBB_BRANCH="master";DB=mysqli
   allow_failures:
-    - php: nightly
-    - php: hhvm
+    - env: PHPBB_BRANCH="master";DB=mysqli
   fast_finish: true
 
 env:
@@ -48,6 +55,8 @@ branches:
     - master
     - develop
     - /^develop-.*$/
+    - /^.*_prep$/
+    - /^\d+(\.\d+)?\.x$/
 
 before_install:
   - sudo mkdir travis
